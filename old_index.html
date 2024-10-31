@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simpleMap</title>
+    <script
+        src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=nQev4Gnamg53zSwXItuHK4HnbaFL5Ho7740Jx8hX"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js"></script>
+    <script src="map.js"></script>
+    <style>
+        #background {
+            z-index: -1;
+        }
+        #searching_section {
+            text-align: center;
+        }
+        /*
+        #searching_section {
+            position: absolute;
+            text-align: center;
+        }
+
+        #searching_section:hover #searching_section,
+        #searching_section:active #searching_section {
+            display: block;
+            margin-top: 0;
+        }*/
+
+        ul {
+            list-style: none;
+        }
+
+        .select_btn {
+            margin-right: 0.5vw;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background-color: #e0e0e0;
+            font-size: 2.5vw;
+        }
+
+        .btn_search {
+            display: inline;
+            width: 20%;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: 600;
+            font-size: 2.5vw;
+            text-align: center;
+            /*line-height: 35px;*/
+            color: #FFF;
+            background-color: #FFBF24;
+            border: #FFF;
+            border-radius: 25px;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background-color: #ffb302;
+        }
+
+        #btn_find_route {
+            /*line-height: 90px;*/
+            background-color: #28E4C0;
+            width: 95%;
+            text-align: center;
+        }
+
+        #btn_find_route:hover {
+            background-color: rgba(43, 207, 177, 0.882)
+        }
+
+        /*
+        #searching_section {
+            display: flex;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        #searching_section>div:first-child {
+            flex-grow: 1;
+            flex-shrink: 3;
+        }
+        #searching_section>div:last-child {
+            text-align: left;
+            flex-grow: 1
+        }
+        */
+
+        #searching_section div {
+            display: block;
+            white-space: nowrap;
+        }
+    </style>
+    <!--<script>
+        const searching_section = document.querySelectorAll("#searching_section");
+
+        searching_section.addEventListener("mouseover", () => {
+            searching_section.style.display = "block";
+        });
+        searching_section.addEventListener("mouseout", () => {
+            searching_section.style.display = "none";
+        });
+    </script>-->
+</head>
+
+<body onload="initTmap();" id="background">
+    <section id="searching_section">
+        <div>
+            <div>
+                <input type="text" id="searchStart" placeholder="출발지를 입력하세요">
+                <button class="btn_search" id="btn_select_start">출발지 검색</button>
+            </div>
+            <div>
+                <input type="text" id="searchEnd" placeholder="도착지를 입력하세요">
+                <button class="btn_search" id="btn_select_end">도착지 검색</button>
+            </div>
+        </div>
+        <div>
+            <button class="btn_search" id="btn_find_route">길찾기</button>
+        </div>
+    </section>
+    <section>
+        <ul id="searchResult"></ul>
+    </section>
+    <section id="map_section"></section>
+
+    <!--<p id="dots"></p><br />-->
+</body>
+
+</html>
