@@ -147,7 +147,7 @@ function searchLocation(type) {
 
                 // 검색 결과 목록에 추가
                 innerHtml += "<li data-lat='" + lat + "' data-lng='" + lon + "' data-name='" + name + "'>" +
-                    "<button class='select_btn' data-type='" + type + "'>선택</button>" +
+                    "<button class='btn_select' data-type='" + type + "'>선택</button>" +
                     "<img src='https://tmapapi.tmapmobility.com/upload/tmap/marker/pin_b_m_" + k + ".png' style='vertical-align:middle;'/>" +
                     "<span>" + name + "</span>" +
                     "</li>";
@@ -159,7 +159,7 @@ function searchLocation(type) {
             map.panToBounds(positionBounds); // 확장된 bounds의 중심으로 이동시키기
 
             // 출발지 또는 도착지 선택 이벤트 처리
-            $(".select_btn").click(function () {
+            $(".btn_select").click(function () {
                 var selectedLat = $(this).parent().data('lat');
                 var selectedLng = $(this).parent().data('lng');
                 var selectedName = $(this).parent().data('name');
