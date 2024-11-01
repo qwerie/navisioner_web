@@ -287,7 +287,6 @@ function findRoute(startPosition, endPosition) {
                     // Yujin Added
                     var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
                     var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
-                    //$("#dots").append(gps_joint_convertPoint + "<br>"); //마지막에 한꺼번에 html에 적어주려고 주석처리함. 
                     gps_joint_array.push([convertPoint._lat, convertPoint._lng]);
 
                     var routeInfoObj = {

@@ -26,6 +26,6 @@ let msg = new ROSLIB.Message({
 });
 
 function publish(content) {
-    msg.data = content   //일단 첫번째 값만 보내겠음. 추후에 수정해야함. (데이터 형식 어떻게 보내야하는지 먼저 알아봐야함.)
+    msg.data = content
     topic.publish(msg)
 }
