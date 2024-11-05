@@ -7,7 +7,7 @@ var resultdrawArr = []; // 경로 그리기 배열
 const ros = new ROSLIB.Ros();
 
 // ROS 연결
-ros.connect('ws://localhost:9090');
+ros.connect('ws://192.168.0.65:9090');
 
 ros.on('error', (error) => {
     console.log(error);
