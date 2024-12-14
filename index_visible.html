@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simpleMap</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <script
+        src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=nQev4Gnamg53zSwXItuHK4HnbaFL5Ho7740Jx8hX"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.1.0/roslib.min.js"></script>
+    <script src="map.js"></script>
+    <link rel="stylesheet" media="screen and (orientation:landscape)" href="landscape.css"> 
+
+    <style>
+        /*#background {
+            z-index: -1;
+        }*/
+        #result_section{
+            display: block;
+        }
+
+        #searching_section{
+            text-align: center;
+        }
+
+        #searching_section > div{
+            padding-right: 1vw;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        input {
+            width: 70%;
+            justify-items: auto;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            background-color: #e0e0e0;
+            font-size: 2.5vw;
+        }
+
+        .btn_search {
+            display: inline;
+            padding: 10px;
+            margin: 10px 0; /*상하에만 마진*/
+            font-weight: 600;
+            font-size: 2.5vw;
+            text-align: center;
+            /*line-height: 35px;*/
+            color: #FFF;
+            background-color: #FFBF24;
+            border: none;
+            border-radius: 25px;
+            transition: all 0.2s;
+        }
+
+        .btn_search:hover {
+            background-color: #ffb302;
+        }
+
+        #btn_find_route {
+            /*line-height: 90px;*/
+            background-color: #28E4C0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #btn_find_route:hover {
+            background-color: rgba(43, 207, 177, 0.882)
+        }
+
+        #searching_section{
+            padding: 0px 10px 10px 10px;
+        }
+        
+        #searching_section div {
+            display: block;
+            white-space: nowrap;
+        }
+
+        #map_section{
+            overflow: hidden;
+            /*position: relative;*/
+        }
+
+        /*#container_call{
+            position: absolute;
+            bottom: 10px; 
+            z-index: 100;
+        }
+
+        #btn_call{
+            display: block;
+            padding: 10px;
+            color: #FFF;
+            background-color: #ff9924;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 70vw;
+        }*/
+
+        #searchResult * {
+            margin-right: 1vw;
+        }
+
+        #searchResult li {
+            display: block;
+            text-align: left;
+            font-size: 2.5vw;
+        }
+
+        .btn_select{
+            /*text-align: center;*/
+            color: #FFF;
+            background-color: #24d0b0;
+            border: none;
+            border-radius: 10px;
+            /*transition: all 0.2s;*/
+        }
+
+        .btn_select:hover {
+            background-color: #2ab299
+        }
+
+        #btn_visible{
+            margin-top: 1vw;
+            width: 100%; /*vw: viewport width의 퍼센티지*/
+            display: block;
+            padding: 10px;
+            color: #FFF;
+            background-color: #ff9924;
+            border: none;
+            border-radius: 10px;
+        }
+
+    </style>
+    <!--<script>
+        const searching_section = document.querySelectorAll("#searching_section");
+
+        searching_section.addEventListener("mouseover", () => {
+            searching_section.style.display = "block";
+        });
+        searching_section.addEventListener("mouseout", () => {
+            searching_section.style.display = "none";
+        });
+    </script>-->
+</head>
+
+<body onload="initTmap();">
+    <h1 style="text-align: center; color:#ff9924;">Navisioner</h1>
+    <audio id="audio_start" src="./audio/01_Start.mp3"></audio>
+    <script>
+         // 오디오 요소 가져오기
+         const audio = document.getElementById("audio_start");
+
+        // 이미 재생되었는지 여부를 추적하는 플래그 변수
+        let hasPlayed = false;
+
+        // 페이지 클릭 시 오디오 재생
+        document.addEventListener("click", function playAudio() {
+            if (!hasPlayed) {  // 오디오가 한 번도 재생되지 않은 경우만 실행
+                audio.play().then(() => {
+                    hasPlayed = true;  // 재생 성공 시 플래그를 true로 설정
+                }).catch(error => {
+                    console.log("Audio play failed:", error);
+                });
+                
+                // 이벤트 리스너 제거
+                document.removeEventListener("click", playAudio);
+            }
+        });
+    </script>
+    <div id="sections">
+        <section id="searching_section">
+            <div>
+                <div>
+                    <input type="text" id="searchStart" placeholder="출발지를 입력하세요">
+                    <button class="btn_search" id="btn_select_start">출발지 검색</button>
+                </div>
+                <div>
+                    <input type="text" id="searchEnd" placeholder="도착지를 입력하세요">
+                    <button class="btn_search" id="btn_select_end">도착지 검색</button>
+                </div>
+            </div>
+            <div>
+                <button class="btn_search" id="btn_find_route">길찾기</button>
+            </div>
+            <div>
+                <ul id="searchResult"></ul>
+            </div>
+        </section>
+        <section id="map_section"></section>
+    </div>
+    <button id="btn_visible" onclick="location.href='index.html'">시각장애인용 화면 보기</button>
+    <div id="dots"></div>
+</body>
+
+</html>
