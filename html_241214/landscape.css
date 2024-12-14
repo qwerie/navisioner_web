@@ -1,0 +1,26 @@
+@media screen and (orientation:landscape){
+    #sections{
+        display:flex;
+    }
+    #searching_section{
+        float: left;
+        margin-right: 3vw;
+    }
+    #map_section{
+        /*overflow: visible;*/
+        float: right !important;
+        height: 80vh !important;
+    }
+    input {
+        font-size: 1vw !important;
+    }
+    .btn_search {
+        font-size: 0.5vw !important;
+        overflow:visible !important;
+        
+    }
+    #searchResult li {
+        font-size: 1vw !important;
+    }
+   
+}
